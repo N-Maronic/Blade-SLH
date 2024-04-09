@@ -1,4 +1,5 @@
-OBJ_DIR := obj
+TGT_DIR := target
+OBJ_DIR := $(TGT_DIR)/obj
 SRC_DIR := src
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
@@ -9,9 +10,11 @@ CXXFLAGS := -MMD $(shell llvm-config-14 --cxxflags)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	clang++ $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
-blade: $(OBJ_FILES)
+$(TGT_DIR)/blade: $(OBJ_FILES) | $(TGT_DIR)
 	clang++ -o $@ $(CPPFLAGS) $(CXXFLAGS) $(LIBRARY) $^
 
 $(OBJ_DIR):
 	mkdir -p $@
 
+$(TGT_DIR):
+	mkdir -p $@
