@@ -22,5 +22,9 @@ $(TGT_DIR):
 	mkdir -p $@
 
 .PHONY: run
-run:
+run: $(BINARY)
 	./$(BINARY)
+
+.PHONY: clean
+clean:
+	rm -rf $(TGT_DIR)
